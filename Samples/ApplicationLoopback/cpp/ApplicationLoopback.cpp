@@ -69,8 +69,9 @@ int wmain(int argc, wchar_t* argv[])
     }
     else
     {
-        std::wcout << L"Capturing 10 seconds of audio." << std::endl;
-        Sleep(10000);
+        std::wcout << L"Capturing audio. Hit Enter to stop." << std::endl;
+        int a;
+        std::wcin >> a;
 
         loopbackCapture.StopCaptureAsync();
 
