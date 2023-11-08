@@ -96,7 +96,7 @@ HRESULT CLoopbackCapture::ActivateCompleted(IActivateAudioInterfaceAsyncOperatio
             // 16 - bit PCM format.
             m_CaptureFormat.wFormatTag = WAVE_FORMAT_PCM;
             m_CaptureFormat.nChannels = 2;
-            m_CaptureFormat.nSamplesPerSec = 44100;
+            m_CaptureFormat.nSamplesPerSec = 48000;
             m_CaptureFormat.wBitsPerSample = 16;
             m_CaptureFormat.nBlockAlign = m_CaptureFormat.nChannels * m_CaptureFormat.wBitsPerSample / BITS_PER_BYTE;
             m_CaptureFormat.nAvgBytesPerSec = m_CaptureFormat.nSamplesPerSec * m_CaptureFormat.nBlockAlign;
