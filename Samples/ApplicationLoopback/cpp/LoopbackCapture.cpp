@@ -7,6 +7,11 @@
 
 #define BITS_PER_BYTE 8
 
+extern WORD nCh;
+extern DWORD nSR;
+extern WORD wBits;
+extern WORD wFormat;
+
 HRESULT CLoopbackCapture::SetDeviceStateErrorIfFailed(HRESULT hr)
 {
     if (FAILED(hr))
@@ -93,34 +98,17 @@ HRESULT CLoopbackCapture::ActivateCompleted(IActivateAudioInterfaceAsyncOperatio
             RETURN_IF_FAILED(punkAudioInterface.copy_to(&m_AudioClient));
 
             // The app can also call m_AudioClient->GetMixFormat instead to get the capture format.
-            // 16 - bit PCM format.
-            // m_CaptureFormat.wFormatTag = WAVE_FORMAT_PCM;
-            // m_CaptureFormat.nChannels = 2;
-            // m_CaptureFormat.nSamplesPerSec = 48000;
-            // m_CaptureFormat.wBitsPerSample = 16;
-            // m_CaptureFormat.nBlockAlign = m_CaptureFormat.nChannels * m_CaptureFormat.wBitsPerSample / BITS_PER_BYTE;
-            // m_CaptureFormat.nAvgBytesPerSec = m_CaptureFormat.nSamplesPerSec * m_CaptureFormat.nBlockAlign;
-            //
-            // Get device mix format
-            WAVEFORMATEX *pwfx = NULL;
-            RETURN_IF_FAILED(m_AudioClient->GetMixFormat(&pwfx));
-            std::wcout << L"1" << L"\n";
-            m_CaptureFormat.wFormatTag = pwfx->wFormatTag;
-            std::wcout << L"2" << L"\n";
-            m_CaptureFormat.nChannels = pwfx->nChannels;
-            std::wcout << L"3" << L"\n";
-            m_CaptureFormat.nSamplesPerSec = pwfx->nSamplesPerSec;
-            std::wcout << L"4" << L"\n";
-            m_CaptureFormat.wBitsPerSample = pwfx->wBitsPerSample;
-            std::wcout << L"5" << L"\n";
-            m_CaptureFormat.nBlockAlign = pwfx->nBlockAlign;
-            std::wcout << L"6" << L"\n";
-            m_CaptureFormat.nAvgBytesPerSec = pwfx->nAvgBytesPerSec;
-            std::wcout << L"7" << L"\n";
-            CoTaskMemFree(pwfx);
+            m_CaptureFormat.wFormatTag = wFormat;   // WAVE_FORMAT_PCM
+            m_CaptureFormat.nChannels = nCh;        // 2 - stereo
+            m_CaptureFormat.nSamplesPerSec = nSR;   // 48000 Hz
+            m_CaptureFormat.wBitsPerSample = wBits; // 16 bit
+            m_CaptureFormat.nBlockAlign = m_CaptureFormat.nChannels * m_CaptureFormat.wBitsPerSample / BITS_PER_BYTE;
+            m_CaptureFormat.nAvgBytesPerSec = m_CaptureFormat.nSamplesPerSec * m_CaptureFormat.nBlockAlign;
+
+            std::wcout << L"wFormatTag = " << m_CaptureFormat.wFormatTag << L"\n";
             std::wcout << L"nChannels = " << m_CaptureFormat.nChannels << L"\n";
-            std::wcout << L"nSamplesPerSec = " << m_CaptureFormat.nSamplesPerSec << L"\n";
             std::wcout << L"wBitsPerSample = " << m_CaptureFormat.wBitsPerSample << L"\n";
+            std::wcout << L"nSamplesPerSec = " << m_CaptureFormat.nSamplesPerSec << L"\n";
 
             // Initialize the AudioClient in Shared Mode with the user specified buffer
             RETURN_IF_FAILED(m_AudioClient->Initialize(AUDCLNT_SHAREMODE_SHARED,
