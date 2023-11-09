@@ -5,30 +5,42 @@
 #include <iostream>
 #include "LoopbackCapture.h"
 
+DWORD nSR = 48000; // nSamplesPerSec
+WORD wBits = 16;   // wBitsPerSample
+WORD nCh = 2;      // nChannels
+WORD wFormat = 1;  // wFormatTag
+
 void usage()
 {
     std::wcout <<
-        L"Usage: ApplicationLoopback <pid> <includetree|excludetree> <outputfilename>\n"
+        L"Usage: ApplicationLoopback <pid> <includetree|excludetree> <outputfilename> [nSR] [wBits] [nCh] [wFormat]\n"
         L"\n"
         L"<pid> is the process ID to capture or exclude from capture\n"
         L"includetree includes audio from that process and its child processes\n"
         L"excludetree includes audio from all processes except that process and its child processes\n"
-        L"<outputfilename> is the WAV file to receive the captured audio (10 seconds)\n"
+        L"<outputfilename> is the WAV file to receive the captured audio\n"
+        L"<nSR> is sample rate, samples per second of one channel (48000)\n"
+        L"<wBits> is bits per sample (16)\n"
+        L"<nCh> is number of channels (2 - stereo)\n"
+        L"<wFormat> is format type (1 - WAVE_FORMAT_PCM)\n"
         L"\n"
         L"Examples:\n"
         L"\n"
         L"ApplicationLoopback 1234 includetree CapturedAudio.wav\n"
         L"\n"
-        L"  Captures audio from process 1234 and its children.\n"
+        L"  Captures audio from process 1234 and its children, at 48000 Hz, 16 bit, 2 channels, PCM.\n"
         L"\n"
         L"ApplicationLoopback 1234 excludetree CapturedAudio.wav\n"
         L"\n"
-        L"  Captures audio from all processes except process 1234 and its children.\n";
+        L"  Captures audio from all processes except process 1234 and its children, at 48000 Hz, 16 bit, 2 channels, PCM.\n";
+        L"ApplicationLoopback 1234 includetree CapturedAudio.wav 44100 16 2\n"
+        L"\n"
+        L"  Captures audio from process 1234 and its children, at 44100 Hz, 16 bit, 2 channels, PCM.\n"
 }
 
 int wmain(int argc, wchar_t* argv[])
 {
-    if (argc != 4)
+    if (argc < 4)
     {
         usage();
         return 0;
@@ -57,6 +69,26 @@ int wmain(int argc, wchar_t* argv[])
     }
 
     PCWSTR outputFile = argv[3];
+
+    if (argc > 4)
+    {
+        nSR = wcstoul(argv[4], nullptr, 0);
+    }
+    
+    if (argc > 5)
+    {
+        wBits = wcstoul(argv[5], nullptr, 0);
+    }
+
+    if (argc > 6)
+    {
+        nCh = wcstoul(argv[6], nullptr, 0);
+    }
+
+    if (argc > 7)
+    {
+        wFormat = wcstoul(argv[7], nullptr, 0);
+    }
 
     CLoopbackCapture loopbackCapture;
     HRESULT hr = loopbackCapture.StartCaptureAsync(processId, includeProcessTree, outputFile);
