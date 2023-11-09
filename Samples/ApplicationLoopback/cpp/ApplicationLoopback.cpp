@@ -32,10 +32,10 @@ void usage()
         L"\n"
         L"ApplicationLoopback 1234 excludetree CapturedAudio.wav\n"
         L"\n"
-        L"  Captures audio from all processes except process 1234 and its children, at 48000 Hz, 16 bit, 2 channels, PCM.\n";
+        L"  Captures audio from all processes except process 1234 and its children, at 48000 Hz, 16 bit, 2 channels, PCM.\n"
         L"ApplicationLoopback 1234 includetree CapturedAudio.wav 44100 16 2\n"
         L"\n"
-        L"  Captures audio from process 1234 and its children, at 44100 Hz, 16 bit, 2 channels, PCM.\n"
+        L"  Captures audio from process 1234 and its children, at 44100 Hz, 16 bit, 2 channels, PCM.\n";
 }
 
 int wmain(int argc, wchar_t* argv[])
