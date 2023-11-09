@@ -77,17 +77,17 @@ int wmain(int argc, wchar_t* argv[])
     
     if (argc > 5)
     {
-        wBits = wcstoul(argv[5], nullptr, 0);
+        wBits = (WORD)wcstoul(argv[5], nullptr, 0);
     }
 
     if (argc > 6)
     {
-        nCh = wcstoul(argv[6], nullptr, 0);
+        nCh = (WORD)wcstoul(argv[6], nullptr, 0);
     }
 
     if (argc > 7)
     {
-        wFormat = wcstoul(argv[7], nullptr, 0);
+        wFormat = (WORD)wcstoul(argv[7], nullptr, 0);
     }
 
     CLoopbackCapture loopbackCapture;
