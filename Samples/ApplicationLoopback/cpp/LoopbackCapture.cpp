@@ -102,14 +102,21 @@ HRESULT CLoopbackCapture::ActivateCompleted(IActivateAudioInterfaceAsyncOperatio
             // m_CaptureFormat.nAvgBytesPerSec = m_CaptureFormat.nSamplesPerSec * m_CaptureFormat.nBlockAlign;
             //
             // Get device mix format
-            WAVEFORMATEXTENSIBLE *pwfx = NULL;
+            WAVEFORMATEX *pwfx = NULL;
             RETURN_IF_FAILED(m_AudioClient->GetMixFormat(&pwfx));
-            m_CaptureFormat.wFormatTag = pwfx->Format.wFormatTag;
-            m_CaptureFormat.nChannels = pwfx->Format.nChannels;
-            m_CaptureFormat.nSamplesPerSec = pwfx->Format.nSamplesPerSec;
-            m_CaptureFormat.wBitsPerSample = pwfx->Format.wBitsPerSample;
-            m_CaptureFormat.nBlockAlign = pwfx->Format.nBlockAlign;
-            m_CaptureFormat.nAvgBytesPerSec = pwfx->Format.nAvgBytesPerSec;
+            std::wcout << L"1" << L"\n";
+            m_CaptureFormat.wFormatTag = pwfx->wFormatTag;
+            std::wcout << L"2" << L"\n";
+            m_CaptureFormat.nChannels = pwfx->nChannels;
+            std::wcout << L"3" << L"\n";
+            m_CaptureFormat.nSamplesPerSec = pwfx->nSamplesPerSec;
+            std::wcout << L"4" << L"\n";
+            m_CaptureFormat.wBitsPerSample = pwfx->wBitsPerSample;
+            std::wcout << L"5" << L"\n";
+            m_CaptureFormat.nBlockAlign = pwfx->nBlockAlign;
+            std::wcout << L"6" << L"\n";
+            m_CaptureFormat.nAvgBytesPerSec = pwfx->nAvgBytesPerSec;
+            std::wcout << L"7" << L"\n";
             CoTaskMemFree(pwfx);
             std::wcout << L"nChannels = " << m_CaptureFormat.nChannels << L"\n";
             std::wcout << L"nSamplesPerSec = " << m_CaptureFormat.nSamplesPerSec << L"\n";
