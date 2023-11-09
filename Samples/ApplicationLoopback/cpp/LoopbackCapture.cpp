@@ -94,23 +94,23 @@ HRESULT CLoopbackCapture::ActivateCompleted(IActivateAudioInterfaceAsyncOperatio
 
             // The app can also call m_AudioClient->GetMixFormat instead to get the capture format.
             // 16 - bit PCM format.
-            // m_CaptureFormat.wFormatTag = WAVE_FORMAT_PCM;
-            // m_CaptureFormat.nChannels = 2;
-            // m_CaptureFormat.nSamplesPerSec = 48000;
-            // m_CaptureFormat.wBitsPerSample = 16;
-            // m_CaptureFormat.nBlockAlign = m_CaptureFormat.nChannels * m_CaptureFormat.wBitsPerSample / BITS_PER_BYTE;
-            // m_CaptureFormat.nAvgBytesPerSec = m_CaptureFormat.nSamplesPerSec * m_CaptureFormat.nBlockAlign;
+            m_CaptureFormat.wFormatTag = WAVE_FORMAT_PCM;
+            m_CaptureFormat.nChannels = 2;
+            m_CaptureFormat.nSamplesPerSec = 48000;
+            m_CaptureFormat.wBitsPerSample = 16;
+            m_CaptureFormat.nBlockAlign = m_CaptureFormat.nChannels * m_CaptureFormat.wBitsPerSample / BITS_PER_BYTE;
+            m_CaptureFormat.nAvgBytesPerSec = m_CaptureFormat.nSamplesPerSec * m_CaptureFormat.nBlockAlign;
             //
             // Get device mix format
-            WAVEFORMATEX *pwfx = NULL;
-            RETURN_IF_FAILED(m_AudioClient->GetMixFormat(&pwfx));
-            m_CaptureFormat.wFormatTag = pwfx->wFormatTag;
-            m_CaptureFormat.nChannels = pwfx->nChannels;
-            m_CaptureFormat.nSamplesPerSec = pwfx->nSamplesPerSec;
-            m_CaptureFormat.wBitsPerSample = pwfx->wBitsPerSample;
-            m_CaptureFormat.nBlockAlign = pwfx->nBlockAlign;
-            m_CaptureFormat.nAvgBytesPerSec = pwfx->nAvgBytesPerSec;
-            CoTaskMemFree(pwfx);
+            // WAVEFORMATEX *pwfx = NULL;
+            // RETURN_IF_FAILED(m_AudioClient->GetMixFormat(&pwfx));
+            // m_CaptureFormat.wFormatTag = pwfx->wFormatTag;
+            // m_CaptureFormat.nChannels = pwfx->nChannels;
+            // m_CaptureFormat.nSamplesPerSec = pwfx->nSamplesPerSec;
+            // m_CaptureFormat.wBitsPerSample = pwfx->wBitsPerSample;
+            // m_CaptureFormat.nBlockAlign = pwfx->nBlockAlign;
+            // m_CaptureFormat.nAvgBytesPerSec = pwfx->nAvgBytesPerSec;
+            // CoTaskMemFree(pwfx);
 
             // Initialize the AudioClient in Shared Mode with the user specified buffer
             RETURN_IF_FAILED(m_AudioClient->Initialize(AUDCLNT_SHAREMODE_SHARED,
