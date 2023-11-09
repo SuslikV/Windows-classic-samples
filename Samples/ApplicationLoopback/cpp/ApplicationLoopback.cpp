@@ -70,8 +70,7 @@ int wmain(int argc, wchar_t* argv[])
     else
     {
         std::wcout << L"Capturing audio. Hit Enter to stop." << std::endl;
-        int a;
-        std::wcin >> a;
+        getwchar();
 
         loopbackCapture.StopCaptureAsync();
 
